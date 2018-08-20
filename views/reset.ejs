@@ -1,0 +1,20 @@
+<% include ./partials/header %>
+
+<div class="row justify-content-center">
+	<div class="col-md-12 text-center">
+		<h1 class="text-center h3">Reset Password</h1>
+	</div>
+	<div class="col-lg-5 col-md-6 col-sm-8 col-xs-12">
+		<form action="/reset/<%= token %>" method="POST">
+			<label for="password" class="sr-only">New Password</label>
+		    <input type="password" name="password" placeholder="New password" class="form-control" autofocus required>
+		    <label for="confirm" class="sr-only">Confirm Password</label>
+		    <input type="password" name="confirm" placeholder="Confirm password" class="form-control" autofocus required>
+		    <button class="btn btn-lg btn-warning btn-block" type="submit">Update Password</button>
+		</form>
+		<a href="/login">Back</a>
+	</div>
+</div>
+
+
+<% include ./partials/footer %>

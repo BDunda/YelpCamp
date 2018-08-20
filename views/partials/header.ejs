@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- Make site responsive on mobile/tablet -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title><%= title %></title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+		<link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+	</head>
+	<body>
+
+		<nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
+			<a class="navbar-brand" href="/">YelpCamp</a>
+				<button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#navbarCollapse" aria-expanded="false" aria-controls="navbarCollapse" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+					
+
+				<div id="navbarCollapse" class="collapse navbar-collapse">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item <%= typeof page !== 'undefined' && page === 'campgrounds' ? 'active' : '' %>"><a href="/campgrounds" class="nav-link">Home <span class="sr-only">(current)</span></a></li>
+					</ul>
+					<ul class="navbar-nav navbar-right">
+						<% if(!currentUser) { %>
+							<li class="nav-item <%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>"><a href="/login" class="nav-link">Login</a></li>
+							<li class="nav-item <%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"><a href="/register" class="nav-link">Sign-Up</a></li>
+						<% } else { %>
+							<li><a href="/user/<%= currentUser._id %>" class="nav-link">Signed in as: <%= currentUser.username %></a></li>
+							<li><a href="/logout" class="nav-link">Logout</a></li>
+						<% } %>
+					</ul>
+				</div>
+		</nav>
+
+		<div class="container">
+		<% if (error && error.length > 0) { %>
+			<div class="alert alert-danger" role="alert"><%= error %></div>
+		<% } %>
+		<% if (success && success.length > 0) {%>
+			<div class="alert alert-success" role="alert"><%= success %></div>
+		<% } %>
+		</div>
+		<div class="container">
+
+			<% if (currentUser && currentUser.isAdmin) {%>
+				<div class="alert alert-info" role="alert" style="text-align: center">Admin Mode</div>
+			<% } %>
