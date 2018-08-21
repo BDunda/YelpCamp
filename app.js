@@ -6,6 +6,8 @@ const express        = require("express"),
 	  expressSanitzer = require("express-sanitizer"),
       mongoose       = require("mongoose"),
       flash          = require("connect-flash"),
+      session        = require("express-session"),
+      MongoStore     = require('connect-mongo')(session),
       Campground     = require("./models/campground"),
       Comment        = require("./models/comment"),
       User           = require("./models/user"),
@@ -22,7 +24,7 @@ const commentRoutes    = require("./routes/comments"),
 
 let title = "";
 
-console.log(process.env.DATABASEURL);
+const url = process.env.DATABASEURL || "localhost://mongodb://localhost:27017/yelp_camp";
 
 mongoose.connect(process.env.DATABASEURL, { useNewUrlParser: true });
 
@@ -37,10 +39,20 @@ app.use(flash());
 app.locals.moment = require("moment"),
 
 // Passport Configuration
-app.use(require('express-session')({
+// app.use(require('express-session')({
+// 	secret: "this is the ultimate secret",
+// 	resave: false,
+// 	saveUninitialized: false
+// }));
+
+app.use(session({
 	secret: "this is the ultimate secret",
 	resave: false,
-	saveUninitialized: false
+	saveUninitialized: false,
+	store: new MongoStore({
+		url: process.env.DATABASEURL,
+		ttl: 14 * 24 * 60 * 60, // = 14 days. Default
+	})
 }));
 
 app.use(passport.initialize());
