@@ -22,9 +22,10 @@ const commentRoutes    = require("./routes/comments"),
 
 let title = "";
 
+console.log(process.env.DATABASEURL);
 
-// mongoose.connect("mongodb://localhost:27017/yelp_camp", { useNewUrlParser: true });
-mongoose.connect("mongodb://brian:KingK00pa@ds125892.mlab.com:25892/yelpcamp87", { useNewUrlParser: true });
+mongoose.connect(process.env.DATABASEURL, { useNewUrlParser: true });
+// mongoose.connect("mongodb://brian:KingK00pa@ds125892.mlab.com:25892/yelpcamp87", { useNewUrlParser: true });
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSanitzer());
