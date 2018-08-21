@@ -11,7 +11,10 @@ const express    = require("express"),
 const router = express.Router({ mergeParams: true });
 
 
-var referedUrl = "/";
+// Declaring variables for redirect
+let referedUrl = "/",
+	loginUrl,
+	registerUrl;
 
 // ==========
 // ROOT ROUTE
@@ -57,8 +60,8 @@ router.post("/register", function(req, res){
 
 // Show login form
 router.get("/login", function(req, res){
-	let loginUrl = req.protocol + '://' + req.get('host') + "/login", // Builds the current URL string
-		registerUrl = req.protocol + '://' + req.get('host') + "/register";
+	loginUrl = req.protocol + '://' + req.get('host') + "/login"; // Builds the current URL string
+	registerUrl = req.protocol + '://' + req.get('host') + "/register";
 
 		if (req.get('referer') != loginUrl && req.get('referer') != registerUrl ){
 			referedUrl = req.get('referer'); // Gets the current page so the user can be redirected back if logged in
