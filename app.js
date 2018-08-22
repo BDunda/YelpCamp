@@ -24,9 +24,10 @@ const commentRoutes    = require("./routes/comments"),
 
 let title = "";
 
-const url = process.env.DATABASEURL || "localhost://mongodb://localhost:27017/yelp_camp";
+const url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp",
+		session_secret = process.env.SESSION_SECRET;
 
-mongoose.connect(process.env.DATABASEURL, { useNewUrlParser: true });
+mongoose.connect(url, { useNewUrlParser: true });
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -46,11 +47,11 @@ app.locals.moment = require("moment"),
 // }));
 
 app.use(session({
-	secret: "this is the ultimate secret",
+	secret: session_secret,
 	resave: false,
 	saveUninitialized: false,
 	store: new MongoStore({
-		url: process.env.DATABASEURL,
+		url: url,
 		ttl: 14 * 24 * 60 * 60, // = 14 days. Default
 	})
 }));
